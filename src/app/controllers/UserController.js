@@ -1,0 +1,54 @@
+const { uuid } = require('uuidv4');
+const Yup = require('yup');
+
+const connection = require('../../database/connection');
+
+module.exports = {
+  async index(request, response) {
+    const users = await connection('users').select('*');
+
+    return response.json(users);
+  },
+
+  async store(request, response) {
+    const { name, email, password, address, city, uf, phoneNumber, cpf, cnh } = request.body;
+    const id = uuid();
+
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string().email().required(),
+      password: Yup.string().required().min(6),
+      address: Yup.string().required(),
+      city: Yup.string().required(),
+      uf: Yup.string().required().max(2),
+      phoneNumber: Yup.string().required(),
+      cpf: Yup.string().required(),
+      cnh: Yup.string().required(),
+    });
+
+    if(!(await schema.isValid(request.body))) {
+      return response.status(400).json({ error: 'Validation fails' });
+    }
+
+    const emailExists = await connection('users').where('email', email).first();
+
+    if(emailExists) {
+      return response.status(400).json({ error: 'Email already used.'});
+    }
+
+    await connection('users').insert({
+      id,
+      name,
+      email,
+      password,
+      address,
+      city,
+      uf,
+      phoneNumber,
+      cpf,
+      cnh,
+    })
+
+    return response.json({ message: 'Successfully created'});
+  }
+};
