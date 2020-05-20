@@ -1,17 +1,12 @@
-const Yup = require ('yup');
-const { promisify } = require('util');
-const jwt = require('jsonwebtoken');
-const connection = require ('../../database/connection');
+import * as Yup from 'yup';
+import connection from '../../database/connection';
+import verifyId from '../middlewares/verifyId';
 
-module.exports = {
+class GiveBackController {
   async store(request, response) {
     const { board } = request.body;
-    const tokenAuthorization = request.headers.authorization;
-    const [, token] = tokenAuthorization.split(' ');
-
-    const decoded = await promisify(jwt.verify)(token, '99fe3105936cebcf42aeebe73086e2bc');
-
-    const user_reserved_id = decoded.id;
+    const token = request.headers.authorization;
+    const user_reserved_id = await verifyId(token);
 
     const schema = Yup.object().shape({
       board: Yup.string().required(),
@@ -28,3 +23,5 @@ module.exports = {
     return response.json({ message: 'Returned car' });
   }
 }
+
+export default new GiveBackController();

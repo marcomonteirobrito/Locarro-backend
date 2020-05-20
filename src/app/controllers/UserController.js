@@ -1,14 +1,14 @@
-const { uuid } = require('uuidv4');
-const Yup = require('yup');
+import { uuid } from 'uuidv4';
+import * as Yup from 'yup';
 
-const connection = require('../../database/connection');
+import connection from '../../database/connection';
 
-module.exports = {
+class UserController {
   async index(request, response) {
     const users = await connection('users').select('*');
 
     return response.json(users);
-  },
+  }
 
   async store(request, response) {
     const { name, email, password, address, city, uf, phoneNumber, cpf, cnh } = request.body;
@@ -49,6 +49,8 @@ module.exports = {
       cnh,
     })
 
-    return response.json({ message: 'Successfully created'});
+    return response.status(200).json({ message: 'Successfully created'});
   }
 };
+
+export default new UserController();

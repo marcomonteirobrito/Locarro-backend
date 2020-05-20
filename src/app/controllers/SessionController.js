@@ -1,9 +1,10 @@
-const jwt = require('jsonwebtoken');
-const Yup = require('yup');
+import jwt from 'jsonwebtoken';
+import * as Yup from 'yup';
 
-const connection = require('../../database/connection');
+import connection from '../../database/connection';
+import authConfig from '../config/auth';
 
-module.exports = {
+class SessionController {
   async store(request, response) {
     const { email, password } = request.body;
 
@@ -33,8 +34,8 @@ module.exports = {
       }
 
     const { id, name } = user;
-    const token = jwt.sign({ id }, '99fe3105936cebcf42aeebe73086e2bc', {
-      expiresIn: '1d',
+    const token = jwt.sign({ id }, authConfig.secret, {
+      expiresIn: authConfig.expiresIn,
     });
 
     return response.json({
@@ -47,3 +48,5 @@ module.exports = {
     });
   }
 }
+
+export default new SessionController();

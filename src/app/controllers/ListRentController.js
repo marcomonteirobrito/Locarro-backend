@@ -1,15 +1,10 @@
-const { promisify } = require('util');
-const jwt = require('jsonwebtoken');
-const connection = require ('../../database/connection');
+import connection from '../../database/connection';
+import verifyId from '../middlewares/verifyId';
 
-module.exports = {
+class ListRentController {
   async index(request, response) {
-    const tokenAuthorization = request.headers.authorization;
-    const [, token] = tokenAuthorization.split(' ');
-
-    const decoded = await promisify(jwt.verify)(token, '99fe3105936cebcf42aeebe73086e2bc');
-
-    const user_reserved_id = decoded.id;
+    const token = request.headers.authorization;
+    const user_reserved_id = await verifyId(token);
 
     const cars = await connection('cars').where('user_reserved_id', user_reserved_id).select('*');
     
@@ -19,3 +14,5 @@ module.exports = {
 
   }
 }
+
+export default new ListRentController();
