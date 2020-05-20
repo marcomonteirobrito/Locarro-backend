@@ -26,5 +26,7 @@ routes.post('/rent', RentController.store);
 routes.get('/rent', ListRentController.index);
 routes.post('/giveback', GiveBackController.store);
 routes.post('/avatar', upload.single('avatar'), AvatarController.store);
+routes.get('/avatar', AvatarController.index);
+
 
 export default routes;
