@@ -13,9 +13,8 @@ class CarController {
 
   async store(request, response) {
     const { board, model, year, color, value , observation } = request.body;
-    const token = request.headers.authorization;
     const id = uuid();
-    const user_id = await verifyId(token);
+    const user_id = request.userId;
       
     const schema = Yup.object().shape({
       board: Yup.string().required(),

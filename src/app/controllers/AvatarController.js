@@ -4,8 +4,7 @@ import { uuid } from 'uuidv4';
 
 class AvatarController {
   async index(request, response) {
-    const token = request.headers.authorization;
-    const user_id = await verifyId(token);
+    const user_id = request.userId;
     const { id, name, path } = await connection('avatar').where('user_id', user_id).first().select('*');
 
     const url = `http://localhost:3333/avatar/${path}`;

@@ -5,8 +5,7 @@ import verifyId from '../middlewares/verifyId';
 class RentController {
   async store(request, response) {
     const { id } = request.body;
-    const token = request.headers.authorization;
-    const user_reserved_id = await verifyId(token);
+    const user_reserved_id = request.userId;
 
     const schema = Yup.object().shape({
       id: Yup.string().required(),
