@@ -1,18 +1,18 @@
 import connection from '../../database/connection';
 import { uuid } from 'uuidv4';
 
-class AvatarController {
+class CarGalleryController {
   async index(request, response) {
-    const user_id = request.userId;
-    const { id, name, path } = await connection('avatar').where('user_id', user_id).first().select('*');
+    const { car_id } = request.body;
+    const { id, name, path } = await connection('carGallery').where('car_id', car_id).first().select('*');
 
-    const url = `http://localhost:3333/avatar/${path}`;
+    const url = `http://localhost:3333/carGallery/${path}`;
 
     response.json({
       id,
       name,
       path,
-      user_id,
+      car_id,
       url
     }
     );
@@ -20,23 +20,23 @@ class AvatarController {
 
   async store(request, response) {
     const { originalname: name, filename: path } = request.file;
-    const user_id = request.userId;
+    const car_id = request.params.carId;
     const id = uuid();
 
-    await connection('avatar').insert({
+    await connection('carGallery').insert({
       id,
       name,
       path,
-      user_id,
+      car_id,
     });
 
     return response.json({
       id,
       name,
       path,
-      user_id,
+      car_id,
     });
   }
 }
 
-export default new AvatarController();
+export default new CarGalleryController();

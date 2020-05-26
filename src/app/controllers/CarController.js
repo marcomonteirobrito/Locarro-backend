@@ -2,7 +2,6 @@ import { uuid } from 'uuidv4';
 import * as Yup from 'yup';
 
 import connection from '../../database/connection';
-import verifyId from '../middlewares/verifyId';
 
 class CarController {
   async index(request, response) {
@@ -35,7 +34,7 @@ class CarController {
       response.status(400).json({ error: 'Board already exists'});
     }
 
-    const car = await connection('cars').insert({
+    await connection('cars').insert({
       id,
       board,
       model,

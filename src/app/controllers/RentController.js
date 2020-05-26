@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
 import connection from '../../database/connection';
-import verifyId from '../middlewares/verifyId';
 
 class RentController {
   async store(request, response) {
@@ -19,7 +18,7 @@ class RentController {
       user_reserved_id: user_reserved_id
     });
 
-    return response.json({ message: 'Car successfully rented' });
+    return response.status(200).json({ message: 'Car successfully rented' });
   }
 }
 

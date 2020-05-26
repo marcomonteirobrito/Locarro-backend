@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
 import connection from '../../database/connection';
-import verifyId from '../middlewares/verifyId';
 
 class GiveBackController {
   async store(request, response) {
@@ -15,7 +14,7 @@ class GiveBackController {
       return response.status(400).json({ error: 'Validation fails' });
     }
 
-    const car = await connection('cars').where('board', board).where('user_reserved_id', user_reserved_id).update({
+    await connection('cars').where('board', board).where('user_reserved_id', user_reserved_id).update({
       user_reserved_id: null
     });
 
