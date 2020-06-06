@@ -7,9 +7,9 @@ exports.up = function(knex) {
       table.string('address').notNullable();
       table.string('city').notNullable();
       table.string('phoneNumber').notNullable();
-      table.string('cpf').notNullable();
-      table.string('cnh').notNullable();  
       table.string('uf', 2).notNullable();
+      table.decimal('latitude');
+      table.decimal('longitude');
   });
 };
 

@@ -11,7 +11,7 @@ class UserController {
   }
 
   async store(request, response) {
-    const { name, email, password, address, city, uf, phoneNumber, cpf, cnh } = request.body;
+    const { name, email, password, address, city, uf, phoneNumber, latitude, longitude } = request.body;
     const id = uuid();
 
     const schema = Yup.object().shape({
@@ -22,8 +22,6 @@ class UserController {
       city: Yup.string().required(),
       uf: Yup.string().required().max(2),
       phoneNumber: Yup.string().required(),
-      cpf: Yup.string().required(),
-      cnh: Yup.string().required(),
     });
 
     if(!(await schema.isValid(request.body))) {
@@ -45,9 +43,9 @@ class UserController {
       city,
       uf,
       phoneNumber,
-      cpf,
-      cnh,
-    })
+      latitude,
+      longitude,
+    });
 
     return response.status(200).json({ message: 'Successfully created'});
   }

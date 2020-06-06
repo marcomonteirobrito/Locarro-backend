@@ -9,7 +9,6 @@ exports.up = function(knex) {
       table.string('value').notNullable();
       table.string('observation');
       table.string('user_reserved_id');
-        
   });
 };
 

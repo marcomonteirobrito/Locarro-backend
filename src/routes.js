@@ -31,7 +31,7 @@ routes.post('/giveback', GiveBackController.store);
 routes.post('/avatar', upload.single('avatar'), AvatarController.store);
 routes.get('/avatar', AvatarController.index);
 routes.get('/carGallery', CarGalleryController.index);
-routes.post('/carGallery/:carId', gallery.single('carGallery'), CarGalleryController.store);
+routes.post('/carGallery/:carId', gallery.array('carGallery'), CarGalleryController.store);
 
 
 export default routes;
