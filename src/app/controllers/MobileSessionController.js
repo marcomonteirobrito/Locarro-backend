@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import authConfig from '../config/auth';
 
-class SessionController {
+class MobileSessionController {
   async store(request, response) {
     const { email, password } = request.body;
 
@@ -22,4 +22,4 @@ class SessionController {
   }
 }
 
-export default new SessionController();
+export default new MobileSessionController();

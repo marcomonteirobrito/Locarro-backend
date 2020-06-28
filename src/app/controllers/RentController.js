@@ -1,18 +1,18 @@
-import * as Yup from 'yup';
 import connection from '../../database/connection';
 
 class RentController {
+  async index(request, response) {
+    const id = request.userId;
+
+    const rentCar = await connection('cars').where('user_reserved_id', id).select('*');
+
+    return response.json(rentCar);
+    
+  }
+
   async store(request, response) {
     const { id } = request.body;
     const user_reserved_id = request.userId;
-
-    const schema = Yup.object().shape({
-      id: Yup.string().required(),
-    });
-
-    if(!(await schema.isValid(request.body))) {
-      return response.status(400).json({ error: 'Validation fails' });
-    }
 
     await connection('cars').where('id', id).update({
       user_reserved_id: user_reserved_id

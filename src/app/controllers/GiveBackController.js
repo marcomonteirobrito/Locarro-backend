@@ -1,4 +1,3 @@
-import * as Yup from 'yup';
 import connection from '../../database/connection';
 
 class GiveBackController {
@@ -6,19 +5,12 @@ class GiveBackController {
     const { board } = request.body;
     const user_reserved_id = request.userId;
 
-    const schema = Yup.object().shape({
-      board: Yup.string().required(),
-    });
-
-    if(!(await schema.isValid(request.body))) {
-      return response.status(400).json({ error: 'Validation fails' });
-    }
-
     await connection('cars').where('board', board).where('user_reserved_id', user_reserved_id).update({
       user_reserved_id: null
     });
 
     return response.json({ message: 'Returned car' });
+
   }
 }
 

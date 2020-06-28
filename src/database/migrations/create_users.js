@@ -8,8 +8,7 @@ exports.up = function(knex) {
       table.string('city').notNullable();
       table.string('phoneNumber').notNullable();
       table.string('uf', 2).notNullable();
-      table.decimal('latitude');
-      table.decimal('longitude');
+      table.boolean('provider').notNullable();
   });
 };
 
