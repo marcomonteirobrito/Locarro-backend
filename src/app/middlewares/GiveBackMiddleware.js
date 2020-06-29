@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 export default async (request, response, next) => {
     const { board } = request.body;
 

@@ -1,10 +1,10 @@
 import connection from '../../database/connection';
 
-class ListMyCarController {
+class ListMyCarsController {
   async index(request, response) {
     const id  = request.userId;
 
-    const cars = await connection('cars').where('user_id', id).first().select('*');
+    const cars = await connection('cars').where('user_id', id).select('*');
     
     return response.json({
       cars
@@ -13,4 +13,4 @@ class ListMyCarController {
   }
 }
 
-export default new ListMyCarController();
+export default new ListMyCarsController();
