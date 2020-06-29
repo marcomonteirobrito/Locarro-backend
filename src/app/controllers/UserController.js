@@ -11,7 +11,7 @@ class UserController {
   }
 
   async store(request, response) {
-    const { name, email, password, address, city, uf, phoneNumber, latitude, longitude } = request.body;
+    const { name, email, password, address, city, uf, phoneNumber, provider } = request.body;
     const id = uuid();
 
     await connection('users').insert({
@@ -23,6 +23,7 @@ class UserController {
       city,
       uf,
       phoneNumber,
+      provider
     });
 
     return response.status(200).json({ message: 'Successfully created'});

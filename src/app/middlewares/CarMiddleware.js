@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 
+import connection from '../../database/connection';
+
 export default async (request, response, next) => {
     const { board, model, year, color, value , observation } = request.body;
 

@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import connection from '../../database/connection';
 
 export default async (request, response, next) => {
-    const { name, email, password, address, city, uf, phoneNumber, latitude, longitude } = request.body;
+    const { name, email, password, address, city, uf, phoneNumber, provider } = request.body;
 
     const schema = Yup.object().shape({
         name: Yup.string().required(),
@@ -12,6 +12,7 @@ export default async (request, response, next) => {
         city: Yup.string().required(),
         uf: Yup.string().required().max(2),
         phoneNumber: Yup.string().required(),
+        provider: Yup.string().required(),
       });
     
       if(!(await schema.isValid(request.body))) {
