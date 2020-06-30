@@ -5,7 +5,7 @@ class ListMyCarsController {
     const id  = request.userId;
 
     const cars = await connection('cars').where('user_id', id).select('*');
-    
+
     return response.json({
       cars
     });

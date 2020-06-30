@@ -1,9 +1,10 @@
 import connection from '../../database/connection';
 import { uuid } from 'uuidv4';
+import { isFunctionScopedDeclaration } from 'sucrase/dist/parser/tokenizer';
 
 class AvatarController {
   async index(request, response) {
-    const user_id = request.userId;
+    const { user_id } = request.params;
     const { id, name, path } = await connection('avatar').where('user_id', user_id).first().select('*');
 
     const url = `http://localhost:3333/avatar/${path}`;

@@ -3,7 +3,7 @@ import { uuid } from 'uuidv4';
 
 class CarGalleryController {
   async index(request, response) {
-    const { car_id } = request.body;
+    const { car_id } = request.params;
     const { id, name, path } = await connection('carGallery').where('car_id', car_id).first().select('*');
 
     const url = `http://localhost:3333/carGallery/${path}`;

@@ -5,9 +5,10 @@ import connection from '../../database/connection';
 
 class UserController {
   async index(request, response) {
-    const users = await connection('users').select('*');
+    const { id } = request.params;
+    const user = await connection('users').where('id', id).first().select('*');
 
-    return response.json(users);
+    return response.json(user);
   }
 
   async store(request, response) {
