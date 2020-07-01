@@ -34,14 +34,15 @@ routes.get('/cars', CarController.index);
 routes.get('/carGallery', CarGalleryController.index);
 routes.get('/avatar/:user_id', AvatarController.index);
 routes.get('/users/:id', UserController.index);
+routes.get('/list/:id', ListMyCarsController.index);
+routes.post('/cars/:user_id', CarMiddleware, CarController.store);
 routes.use(authMiddleware);
-routes.post('/cars', CarMiddleware, CarController.store);
-routes.delete('/cars', CarController.delete);
+routes.delete('/cars/:id', CarController.delete);
 routes.post('/carGallery/:carId', gallery.single('carGallery'), CarGalleryController.store);
 routes.post('/rent', RentController.store);
 routes.get('/rent', RentController.index);
 routes.post('/giveback', GiveBackMiddleware, GiveBackController.store);
 routes.post('/avatar', upload.single('avatar'), AvatarController.store);
-routes.get('/list', ListMyCarsController.index);
+
 
 export default routes;

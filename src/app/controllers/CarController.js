@@ -12,7 +12,7 @@ class CarController {
   async store(request, response) {
     const { board, model, year, color, value , observation } = request.body;
     const id = uuid();
-    const user_id = request.userId;
+    const { user_id } = request.params;
       
     await connection('cars').insert({
       id,
@@ -30,20 +30,19 @@ class CarController {
 
   async delete(request, response) {
     const { id } = request.params;
-    const user_id = request.userId;
 
     const car = await connection('cars')
       .where('id', id)
-      .select('user_id', user_id)
+
       .first();
 
-    if(car.user_id != user_id) {
-        return response.status(401).json({ error: 'Operation not permitted'});
+    if(!car) {
+      return response.status(401).json({ error: 'Vehicle not found'});
     }
 
-    await connection('incidents').where('id', id).delete();
+    await connection('cars').where('id', id).delete();
 
-    return response.status(204).json({ message: 'Vehicle successfully removed'});
+    return response.status(200).json({ message: 'Vehicle successfully removed'});
 
   }
 }

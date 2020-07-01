@@ -2,7 +2,7 @@ import connection from '../../database/connection';
 
 class ListMyCarsController {
   async index(request, response) {
-    const id  = request.userId;
+    const { id } = request.params;
 
     const cars = await connection('cars').where('user_id', id).select('*');
 
