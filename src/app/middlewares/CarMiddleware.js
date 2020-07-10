@@ -11,7 +11,6 @@ export default async (request, response, next) => {
         year: Yup.string().required(),
         color: Yup.string().required(),
         value: Yup.string().required(),
-        observation: Yup.string().required(),
       });
   
       if(!(await schema.isValid(request.body))) {

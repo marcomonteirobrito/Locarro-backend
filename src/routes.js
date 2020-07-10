@@ -27,13 +27,14 @@ const routes = new Router();
 const upload = multer(multerConfig);
 const gallery = multer(multerGallery);
 
+routes.get('/users/:id', UserController.index);
+routes.put('/users/:id', UserController.update);
 routes.post('/users', UserMiddleware, UserController.store);
 routes.post('/sessions', SessionMiddleware, SessionController.store);
 routes.post('/mobileSessions', MobileMiddleware, MobileSessionController.store);
 routes.get('/cars', CarController.index);
 routes.get('/carGallery', CarGalleryController.index);
 routes.get('/avatar/:user_id', AvatarController.index);
-routes.get('/users/:id', UserController.index);
 routes.get('/list/:id', ListMyCarsController.index);
 routes.post('/cars/:user_id', CarMiddleware, CarController.store);
 routes.use(authMiddleware);
@@ -43,6 +44,7 @@ routes.post('/rent', RentController.store);
 routes.get('/rent', RentController.index);
 routes.post('/giveback', GiveBackMiddleware, GiveBackController.store);
 routes.post('/avatar', upload.single('avatar'), AvatarController.store);
+
 
 
 export default routes;

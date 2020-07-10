@@ -1,6 +1,5 @@
 import connection from '../../database/connection';
 import { uuid } from 'uuidv4';
-import { isFunctionScopedDeclaration } from 'sucrase/dist/parser/tokenizer';
 
 class AvatarController {
   async index(request, response) {
