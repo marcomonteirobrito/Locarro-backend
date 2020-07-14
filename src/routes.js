@@ -37,13 +37,14 @@ routes.get('/carGallery', CarGalleryController.index);
 routes.get('/avatar/:user_id', AvatarController.index);
 routes.get('/list/:id', ListMyCarsController.index);
 routes.post('/cars/:user_id', CarMiddleware, CarController.store);
-routes.use(authMiddleware);
 routes.delete('/cars/:id', CarController.delete);
+routes.post('/avatar/:user_id', upload.single('avatar'), AvatarController.store);
+routes.use(authMiddleware);
 routes.post('/carGallery/:carId', gallery.single('carGallery'), CarGalleryController.store);
 routes.post('/rent', RentController.store);
 routes.get('/rent', RentController.index);
 routes.post('/giveback', GiveBackMiddleware, GiveBackController.store);
-routes.post('/avatar', upload.single('avatar'), AvatarController.store);
+
 
 
 

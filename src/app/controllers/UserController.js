@@ -53,8 +53,12 @@ class UserController {
 
     const user = await connection('users').where('id', id).first().select('*');
 
-    if (oldPassword && !(await user.checkPassword(oldPassword))) {
-      return response.status(401).json({ error: 'Password does not match' });
+    if (oldPassword) {
+      const checkPassword =  await connection('users').where('password', oldPassword).first();
+
+      if (!checkPassword) {
+        return response.status(401).json({ error: 'Password does not match' });
+      }
     }
 
     await connection('users').where('id', id).first().update({

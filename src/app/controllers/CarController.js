@@ -33,7 +33,6 @@ class CarController {
 
     const car = await connection('cars')
       .where('id', id)
-
       .first();
 
     if(!car) {

@@ -4,7 +4,7 @@ import { uuid } from 'uuidv4';
 class AvatarController {
   async index(request, response) {
     const { user_id } = request.params;
-    const { id, name, path } = await connection('avatar').where('user_id', user_id).first().select('*');
+    const { id, name, path } = await connection('avatar').where('user_id', user_id).first();
 
     const url = `http://localhost:3333/avatar/${path}`;
 
@@ -12,15 +12,14 @@ class AvatarController {
       id,
       name,
       path,
-      user_id,
-      url
+      url,
     }
     );
   }
 
   async store(request, response) {
     const { originalname: name, filename: path } = request.file;
-    const user_id = request.userId;
+    const { user_id } = request.params;
     const id = uuid();
 
     await connection('avatar').insert({
